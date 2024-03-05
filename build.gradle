@@ -16,7 +16,6 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
     implementation group: 'org.json', name: 'json', version: '20240205'
 
-
 }
 
 test {
