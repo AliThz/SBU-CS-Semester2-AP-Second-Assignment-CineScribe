@@ -6,6 +6,8 @@ import java.net.URL;
 import java.net.HttpURLConnection;
 
 public class Actors {
+
+    //region [ - Properties - ]
     public static final String API_KEY = "uvpIFPXS7SEX6mroJq8uxPyUf5q9vyWhLxfv4D6U";
     String name;
     String gender;
@@ -15,10 +17,16 @@ public class Actors {
     Double netWorth;
     Boolean isAlive;
     String dateOfDeath;
+    //endregion
 
+    //region [ - Constructors - ]
+
+    //region [ - Actors(String netWorth, boolean isAlive) { - ]
     public Actors(String netWorth, boolean isAlive) {
     }
+    //endregion
 
+    //region [ - Actors(String name) { - ]
     public Actors(String name) {
         this.name = name;
         String actorData = getActorData(name);
@@ -30,7 +38,13 @@ public class Actors {
         isAlive = isAlive(actorData);
         dateOfDeath = getDateOfDeathViaApi(actorData);
     }
+    //endregion
 
+    //endregion
+
+    //region [ - Methods - ]
+
+    //region [ - getActorData(String name) - ]
     @SuppressWarnings({"deprecation"})
     /**
      * Retrieves data for the specified actor.
@@ -63,50 +77,67 @@ public class Actors {
             return null;
         }
     }
+    //endregion
 
+    //region [ - getGenderViaApi(String actorsInfoJson) - ]
     public String getGenderViaApi(String actorsInfoJson) {
 
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
         String result = jsonObject.getString("gender");
         return result;
     }
+    //endregion
 
+    //region [ - getNationalityViaApi(String actorsInfoJson) - ]
     public String getNationalityViaApi(String actorsInfoJson) {
 
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
         String result = jsonObject.getString("nationality");
         return result;
     }
+    //endregion
 
+    //region [ - getHeightViaApi(String actorsInfoJson) - ]
     public Double getHeightViaApi(String actorsInfoJson) {
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
         Double result = jsonObject.getDouble("birthday");
         return result;
     }
+    //endregion
 
+    //region [ - getBirthdayViaApi(String actorsInfoJson) - ]
     public String getBirthdayViaApi(String actorsInfoJson) {
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
         String result = jsonObject.getString("birthday");
         return result;
     }
+    //endregion
 
+    //region [ - getNetWorthViaApi(String actorsInfoJson) - ]
     public double getNetWorthViaApi(String actorsInfoJson) {
 
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
         Double result = jsonObject.getDouble("net_worth");
         return result;
     }
+    //endregion
 
+    //region [ - isAlive(String actorsInfoJson) - ]
     public boolean isAlive(String actorsInfoJson) {
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
         boolean result = jsonObject.getBoolean("is_alive");
         return result;
     }
+    //endregion
 
+    //region [ - getDateOfDeathViaApi(String actorsInfoJson) { - ]
     public String getDateOfDeathViaApi(String actorsInfoJson) {
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
         String result = jsonObject.getString("death");
         return result;
     }
+    //endregion
+
+    //endregion
 
 }
