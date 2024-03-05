@@ -7,11 +7,28 @@ import java.net.HttpURLConnection;
 
 public class Actors {
     public static final String API_KEY = "uvpIFPXS7SEX6mroJq8uxPyUf5q9vyWhLxfv4D6U";
-    String netWorth;
+    String name;
+    String gender;
+    String nationality;
+    Double height;
+    String birthday;
+    Double netWorth;
     Boolean isAlive;
+    String dateOfDeath;
 
     public Actors(String netWorth, boolean isAlive) {
-        //TODO --> (Write a proper constructor using the get_from_api functions)
+    }
+
+    public Actors(String name) {
+        this.name = name;
+        String actorData = getActorData(name);
+        gender = getGenderViaApi(actorData);
+        nationality = getNationalityViaApi(actorData);
+        height = getHeightViaApi(actorData);
+        birthday = getBirthdayViaApi(actorData);
+        netWorth = getNetWorthViaApi(actorData);
+        isAlive = isAlive(actorData);
+        dateOfDeath = getDateOfDeathViaApi(actorData);
     }
 
     @SuppressWarnings({"deprecation"})
@@ -47,23 +64,49 @@ public class Actors {
         }
     }
 
+    public String getGenderViaApi(String actorsInfoJson) {
+
+        JSONObject jsonObject = new JSONObject(actorsInfoJson);
+        String result = jsonObject.getString("gender");
+        return result;
+    }
+
+    public String getNationalityViaApi(String actorsInfoJson) {
+
+        JSONObject jsonObject = new JSONObject(actorsInfoJson);
+        String result = jsonObject.getString("nationality");
+        return result;
+    }
+
+    public Double getHeightViaApi(String actorsInfoJson) {
+        JSONObject jsonObject = new JSONObject(actorsInfoJson);
+        Double result = jsonObject.getDouble("birthday");
+        return result;
+    }
+
+    public String getBirthdayViaApi(String actorsInfoJson) {
+        JSONObject jsonObject = new JSONObject(actorsInfoJson);
+        String result = jsonObject.getString("birthday");
+        return result;
+    }
+
     public double getNetWorthViaApi(String actorsInfoJson) {
 
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
-        double result = jsonObject.getDouble("net_worth");
+        Double result = jsonObject.getDouble("net_worth");
         return result;
     }
 
     public boolean isAlive(String actorsInfoJson) {
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
-        boolean statues = jsonObject.getBoolean("is_alive");
-        return statues;
+        boolean result = jsonObject.getBoolean("is_alive");
+        return result;
     }
 
     public String getDateOfDeathViaApi(String actorsInfoJson) {
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
-        String date = jsonObject.getString("death");
-        return date;
+        String result = jsonObject.getString("death");
+        return result;
     }
 
 }
