@@ -11,19 +11,35 @@ import java.util.Arrays;
 
 public class Movie {
     public static final String API_KEY = "36ccb2d7";
-    int ImdbVotes;
+    String title;
+    int year;
+    String contentRating;
+    String releaseDate;
+    int runtimeInMinutes;
+    ArrayList<String> genres;
+    String director;
     ArrayList<String> actorsList;
+    String plot;
     String rating;
+    int ImdbVotes;
 
     public Movie(ArrayList<String> actorsList, String rating, int ImdbVotes){
         //TODO --> (Write a proper constructor using the get_from_api functions)
     }
 
     public Movie(String title) throws IOException {
+        this.title = title;
         String movieData = getMovieData(title);
-        ImdbVotes = getImdbVotesViaApi(movieData);
-        rating = getRatingViaApi(movieData);
+        year = getYearViaApi(movieData);
+        contentRating = getContentRatingViaApi(movieData);
+        releaseDate = getReleaseDateViaApi(movieData);
+        runtimeInMinutes = getRuntimeInMinutesViaApi(movieData);
+        getGenresViaApi(movieData);
+        director = getDirectorViaApi(movieData);
         getActorListViaApi(movieData);
+        plot = getPlotViaApi(movieData);
+        rating = getRatingViaApi(movieData);
+        ImdbVotes = getImdbVotesViaApi(movieData);
     }
 
     @SuppressWarnings("deprecation")
@@ -48,10 +64,54 @@ public class Movie {
         //handle an error if the chosen movie is not found
         return stringBuilder.toString();
     }
-    public int getImdbVotesViaApi(String moviesInfoJson){
+
+    public int getYearViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
-        String stringImdbVotes =  jsonObject.getString("imdbVotes").replace(",","");
-        int result = Integer.parseInt(stringImdbVotes);
+        int result = jsonObject.getInt("Year");
+        return result;
+    }
+
+    public String getContentRatingViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String result = jsonObject.getString("Rated");
+        return result;
+    }
+
+    public String getReleaseDateViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String result = jsonObject.getString("Released");
+        return result;
+    }
+
+    public int getRuntimeInMinutesViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        int result = jsonObject.getInt("runtime");
+        return result;
+    }
+
+    public void getGenresViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String allGenres = jsonObject.getString("Genre");
+        String[] genres = allGenres.split(", ");
+        this.genres.addAll(Arrays.asList(genres));
+    }
+
+    public String getDirectorViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String result = jsonObject.getString("Director");
+        return result;
+    }
+
+    public void getActorListViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String allActors = jsonObject.getString("Actors");
+        String[] actors = allActors.split(", ");
+        this.actorsList.addAll(Arrays.asList(actors));
+    }
+
+    public String getPlotViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String result = jsonObject.getString("Plot");
         return result;
     }
 
@@ -63,11 +123,11 @@ public class Movie {
         return result;
     }
 
-    public void getActorListViaApi(String moviesInfoJson){
-        //TODO --> (This function must return the "Actors" in actorsList)
+    public int getImdbVotesViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
-        String allActors = jsonObject.getString("Actors");
-        String[] actors = allActors.split(", ");
-        this.actorsList.addAll(Arrays.asList(actors));
+        String stringImdbVotes =  jsonObject.getString("imdbVotes").replace(",","");
+        int result = Integer.parseInt(stringImdbVotes);
+        return result;
     }
+
 }
