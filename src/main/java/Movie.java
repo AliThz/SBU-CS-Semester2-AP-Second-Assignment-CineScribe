@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Movie {
+
+    //region [ - Properties - ]
     public static final String API_KEY = "36ccb2d7";
     String title;
     int year;
@@ -22,11 +24,17 @@ public class Movie {
     String plot;
     String rating;
     int ImdbVotes;
+    //endregion
 
+    //region [ - Constructors - ]
+
+    //region [ - Movie(ArrayList<String> actorsList, String rating, int ImdbVotes) - ]
     public Movie(ArrayList<String> actorsList, String rating, int ImdbVotes){
         //TODO --> (Write a proper constructor using the get_from_api functions)
     }
+    //endregion
 
+    //region [ - Movie(String title) - ]
     public Movie(String title) throws IOException {
         this.title = title;
         String movieData = getMovieData(title);
@@ -41,7 +49,13 @@ public class Movie {
         rating = getRatingViaApi(movieData);
         ImdbVotes = getImdbVotesViaApi(movieData);
     }
+    //endregion
 
+    //endregion
+
+    //region [ - Methods - ]
+
+    //region [ - getMovieData(String title) - ]
     @SuppressWarnings("deprecation")
     /**
      * Retrieves data for the specified movie.
@@ -64,57 +78,75 @@ public class Movie {
         //handle an error if the chosen movie is not found
         return stringBuilder.toString();
     }
+    //endregion
 
+    //region [ - getYearViaApi(String moviesInfoJson) - ]
     public int getYearViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         int result = jsonObject.getInt("Year");
         return result;
     }
+    //endregion
 
+    //region [ - getContentRatingViaApi(String moviesInfoJson) - ]
     public String getContentRatingViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         String result = jsonObject.getString("Rated");
         return result;
     }
+    //endregion
 
+    //region [ - getReleaseDateViaApi(String moviesInfoJson) - ]
     public String getReleaseDateViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         String result = jsonObject.getString("Released");
         return result;
     }
+    //endregion
 
+    //region [ - getRuntimeInMinutesViaApi(String moviesInfoJson) - ]
     public int getRuntimeInMinutesViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         int result = jsonObject.getInt("runtime");
         return result;
     }
+    //endregion
 
+    //region [ - getGenresViaApi(String moviesInfoJson) - ]
     public void getGenresViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         String allGenres = jsonObject.getString("Genre");
         String[] genres = allGenres.split(", ");
         this.genres.addAll(Arrays.asList(genres));
     }
+    //endregion
 
+    //region [ - getDirectorViaApi(String moviesInfoJson) - ]
     public String getDirectorViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         String result = jsonObject.getString("Director");
         return result;
     }
+    //endregion
 
+    //region [ - getActorListViaApi(String moviesInfoJson) - ]
     public void getActorListViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         String allActors = jsonObject.getString("Actors");
         String[] actors = allActors.split(", ");
         this.actorsList.addAll(Arrays.asList(actors));
     }
+    //endregion
 
+    //region [ - getPlotViaApi(String moviesInfoJson) - ]
     public String getPlotViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         String result = jsonObject.getString("Plot");
         return result;
     }
+    //endregion
 
+    //region [ - getRatingViaApi(String moviesInfoJson) - ]
     public String getRatingViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         JSONArray ratings = jsonObject.getJSONArray("Ratings");
@@ -122,12 +154,17 @@ public class Movie {
         String result = rating.getString("Value");
         return result;
     }
+    //endregion
 
+    //region [ - getImdbVotesViaApi(String moviesInfoJson) - ]
     public int getImdbVotesViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
         String stringImdbVotes =  jsonObject.getString("imdbVotes").replace(",","");
         int result = Integer.parseInt(stringImdbVotes);
         return result;
     }
+    //endregion
+
+    //endregion
 
 }
