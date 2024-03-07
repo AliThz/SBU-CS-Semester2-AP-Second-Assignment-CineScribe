@@ -1,3 +1,4 @@
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,8 +32,8 @@ public class Actors {
 
     //region [ - Actors(String name) - ]
     public Actors(String name) {
-        this.name = name;
         String actorData = getActorData(name);
+        this.name = getNameViaApi(actorData);
         gender = getGenderViaApi(actorData);
         nationality = getNationalityViaApi(actorData);
         occupations = new ArrayList<>();
@@ -41,7 +42,9 @@ public class Actors {
         birthday = getBirthdayViaApi(actorData);
         netWorth = getNetWorthViaApi(actorData);
         isAlive = isAlive(actorData);
-        dateOfDeath = getDateOfDeathViaApi(actorData);
+        if(!isAlive) {
+            dateOfDeath = getDateOfDeathViaApi(actorData);
+        }
     }
     //endregion
 
@@ -84,6 +87,14 @@ public class Actors {
     }
     //endregion
 
+    //region [ - getNameViaApi(String moviesInfoJson) - ]
+    public String getNameViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String result = jsonObject.getString("name");
+        return result;
+    }
+    //endregion
+
     //region [ - getGenderViaApi(String actorsInfoJson) - ]
     public String getGenderViaApi(String actorsInfoJson) {
 
@@ -105,16 +116,15 @@ public class Actors {
     //region [ - getOccupationsListViaApi(String moviesInfoJson) - ]
     public void getOccupationsListViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
-        String allOccupations = jsonObject.getString("occupation");
-        String[] occupations = allOccupations.split(", ");
-        this.occupations.addAll(Arrays.asList(occupations));
+        JSONArray allOccupations = jsonObject.getJSONArray("occupation");
+        allOccupations.forEach(o -> this.occupations.add(o.toString()));
     }
     //endregion
 
     //region [ - getHeightViaApi(String actorsInfoJson) - ]
     public Double getHeightViaApi(String actorsInfoJson) {
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
-        Double result = jsonObject.getDouble("birthday");
+        Double result = jsonObject.getDouble("height");
         return result;
     }
     //endregion
