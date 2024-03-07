@@ -1,6 +1,6 @@
 # Project Title
 
-AP Second Assignment : CineScribe
+AP Second Assignment :  CineScribe
 
 ## Description
 
