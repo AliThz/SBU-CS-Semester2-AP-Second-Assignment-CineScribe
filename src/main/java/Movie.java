@@ -23,7 +23,7 @@ public class Movie {
     ArrayList<String> actorsList;
     String plot;
     String rating;
-    int ImdbVotes;
+    int imdbVotes;
     //endregion
 
     //region [ - Constructors - ]
@@ -36,8 +36,8 @@ public class Movie {
 
     //region [ - Movie(String title) - ]
     public Movie(String title) throws IOException {
-        this.title = title;
         String movieData = getMovieData(title);
+        this.title = getTitleViaApi(movieData);
         year = getYearViaApi(movieData);
         contentRating = getContentRatingViaApi(movieData);
         releaseDate = getReleaseDateViaApi(movieData);
@@ -49,7 +49,7 @@ public class Movie {
         getActorListViaApi(movieData);
         plot = getPlotViaApi(movieData);
         rating = getRatingViaApi(movieData);
-        ImdbVotes = getImdbVotesViaApi(movieData);
+        imdbVotes = getImdbVotesViaApi(movieData);
     }
     //endregion
 
@@ -79,6 +79,14 @@ public class Movie {
         reader.close();
         //handle an error if the chosen movie is not found
         return stringBuilder.toString();
+    }
+    //endregion
+
+    //region [ - getTitleViaApi(String moviesInfoJson) - ]
+    public String getTitleViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String result = jsonObject.getString("Title");
+        return result;
     }
     //endregion
 
