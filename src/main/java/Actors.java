@@ -1,3 +1,7 @@
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -87,9 +91,9 @@ public class Actors {
     }
     //endregion
 
-    //region [ - getNameViaApi(String moviesInfoJson) - ]
-    public String getNameViaApi(String moviesInfoJson){
-        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+    //region [ - getNameViaApi(String actorsInfoJson) - ]
+    public String getNameViaApi(String actorsInfoJson){
+        JSONObject jsonObject = new JSONObject(actorsInfoJson);
         String result = jsonObject.getString("name");
         return result;
     }
@@ -113,9 +117,9 @@ public class Actors {
     }
     //endregion
 
-    //region [ - getOccupationsListViaApi(String moviesInfoJson) - ]
-    public void getOccupationsListViaApi(String moviesInfoJson){
-        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+    //region [ - getOccupationsListViaApi(String actorsInfoJson) - ]
+    public void getOccupationsListViaApi(String actorsInfoJson){
+        JSONObject jsonObject = new JSONObject(actorsInfoJson);
         JSONArray allOccupations = jsonObject.getJSONArray("occupation");
         allOccupations.forEach(o -> this.occupations.add(o.toString()));
     }
