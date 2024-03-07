@@ -8,6 +8,7 @@ import java.net.URLConnection;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Movie {
 
@@ -24,6 +25,7 @@ public class Movie {
     String plot;
     String rating;
     int imdbVotes;
+    String message;
     //endregion
 
     //region [ - Constructors - ]
@@ -37,6 +39,11 @@ public class Movie {
     //region [ - Movie(String title) - ]
     public Movie(String title) throws IOException {
         String movieData = getMovieData(title);
+        JSONObject jsonObject = new JSONObject(movieData);
+        if (!jsonObject.getBoolean("Response")){
+            message = "Error movie " + title + " not found";
+            return;
+        }
         this.title = getTitleViaApi(movieData);
         year = getYearViaApi(movieData);
         contentRating = getContentRatingViaApi(movieData);
@@ -50,6 +57,7 @@ public class Movie {
         plot = getPlotViaApi(movieData);
         rating = getRatingViaApi(movieData);
         imdbVotes = getImdbVotesViaApi(movieData);
+        message = "";
     }
     //endregion
 

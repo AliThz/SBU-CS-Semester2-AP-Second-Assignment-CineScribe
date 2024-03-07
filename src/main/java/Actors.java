@@ -25,6 +25,7 @@ public class Actors {
     Double netWorth;
     Boolean isAlive;
     String dateOfDeath;
+    String message;
     //endregion
 
     //region [ - Constructors - ]
@@ -37,6 +38,10 @@ public class Actors {
     //region [ - Actors(String name) - ]
     public Actors(String name) {
         String actorData = getActorData(name);
+        if (actorData.isEmpty()){
+            message = "Error actor " + name + " not found";
+            return;
+        }
         this.name = getNameViaApi(actorData);
         gender = getGenderViaApi(actorData);
         nationality = getNationalityViaApi(actorData);
@@ -49,6 +54,7 @@ public class Actors {
         if(!isAlive) {
             dateOfDeath = getDateOfDeathViaApi(actorData);
         }
+        message = "";
     }
     //endregion
 
