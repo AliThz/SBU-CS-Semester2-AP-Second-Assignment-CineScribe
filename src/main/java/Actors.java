@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Actors {
 
@@ -12,6 +14,7 @@ public class Actors {
     String name;
     String gender;
     String nationality;
+    ArrayList<String> occupations;
     Double height;
     String birthday;
     Double netWorth;
@@ -21,17 +24,19 @@ public class Actors {
 
     //region [ - Constructors - ]
 
-    //region [ - Actors(String netWorth, boolean isAlive) { - ]
+    //region [ - Actors(String netWorth, boolean isAlive) - ]
     public Actors(String netWorth, boolean isAlive) {
     }
     //endregion
 
-    //region [ - Actors(String name) { - ]
+    //region [ - Actors(String name) - ]
     public Actors(String name) {
         this.name = name;
         String actorData = getActorData(name);
         gender = getGenderViaApi(actorData);
         nationality = getNationalityViaApi(actorData);
+        occupations = new ArrayList<>();
+        getOccupationsListViaApi(actorData);
         height = getHeightViaApi(actorData);
         birthday = getBirthdayViaApi(actorData);
         netWorth = getNetWorthViaApi(actorData);
@@ -94,6 +99,15 @@ public class Actors {
         JSONObject jsonObject = new JSONObject(actorsInfoJson);
         String result = jsonObject.getString("nationality");
         return result;
+    }
+    //endregion
+
+    //region [ - getOccupationsListViaApi(String moviesInfoJson) - ]
+    public void getOccupationsListViaApi(String moviesInfoJson){
+        JSONObject jsonObject = new JSONObject(moviesInfoJson);
+        String allOccupations = jsonObject.getString("occupation");
+        String[] occupations = allOccupations.split(", ");
+        this.occupations.addAll(Arrays.asList(occupations));
     }
     //endregion
 
