@@ -42,7 +42,7 @@ return result;
 
 ### Bugs
 
-* During some get requests, the Json response was a list and has "[]" at the beginning and the end of it so I pass a substring of my Json string to the JsonObject constructor that starts from index 1 and ends at an index before the last.
+* During some get requests, the Json response was a list and has "[]" at the beginning and the end of it so I pass a substring of my Json string to the JsonObject constructor that starts from index 1 and ends at an index before the last. 
 
 ## Movie Class
 
@@ -56,11 +56,18 @@ return result;
 
 * a little difficulty about nested Jsons that was discussed in the "Json Parsing" section 
 
-### Main Class
+## Main Class
 
-* I created a menu that the user can choose weather an actor or a movie to get their information.
-* The information of actors and movies are displayed with related unicodes.
+* I created a menu that the user can choose weather an actor or a movie to get their information separately.
+* The information of actors and movies are displayed with related uni codes.
 * When the information of a movie is displayed you can choose one of its actors and see him/her information too.
+
+## Error Handling
+
+* If user enters an actor name that is not in the api database, the app displays a message and redirects the user to the menu.
+* If user enters a movie title that is not in the api database, the app displays a message and redirects the user to the menu.
+* There are three top actors of a movie in the movie information and if you choose a number out of its range the app displays a message and you have to enter a valid number or go back to the menu.
+* In all menus that you have to navigate by entering a number or a character, if you enter an invalid command, you face a message and turn back to the previous stage. 
 
 ## Thanks to
 
