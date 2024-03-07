@@ -42,8 +42,10 @@ public class Movie {
         contentRating = getContentRatingViaApi(movieData);
         releaseDate = getReleaseDateViaApi(movieData);
         runtimeInMinutes = getRuntimeInMinutesViaApi(movieData);
+        genres = new ArrayList<>();
         getGenresViaApi(movieData);
         director = getDirectorViaApi(movieData);
+        actorsList = new ArrayList<>();
         getActorListViaApi(movieData);
         plot = getPlotViaApi(movieData);
         rating = getRatingViaApi(movieData);
@@ -107,7 +109,7 @@ public class Movie {
     //region [ - getRuntimeInMinutesViaApi(String moviesInfoJson) - ]
     public int getRuntimeInMinutesViaApi(String moviesInfoJson){
         JSONObject jsonObject = new JSONObject(moviesInfoJson);
-        int result = jsonObject.getInt("runtime");
+        int result = Integer.parseInt(jsonObject.getString("Runtime").split(" ")[0]);
         return result;
     }
     //endregion
