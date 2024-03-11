@@ -22,7 +22,7 @@ Before getting started, ensure you have the following installed:
 5. Implement a menu in your Main class. This menu should allow users to:
 
  	- Enter the name of a movie and display information extracted from the JSON object in the console, including the list of actors.
-	- Choose an actor from the displayed list and view their information in the console. If the actor is deceased, calculate their age at the time of death.
+	- Choose an actor from the displayed list and view their information in the console. If the actor is deceased, display him/her date of death.
 
 6. Add error handling to handle cases where the API returns an error or the movie/actor name is not found. For instance, if the user enters the movie name "Tis Is Us," and the API responds with {"Response":"False","Error":"Movie not found!"}, the program should prompt the user to enter a new movie name until a valid one is provided.
 7. Write a comprehensive report detailing the tasks you have completed and any challenges you encountered. **Your report should be written in Markdown format.** You can write your report in the provided Report-Template.md file located within the repository, which serves as a simple template for structuring your report.
